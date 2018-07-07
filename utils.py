@@ -7,3 +7,15 @@ def check_admin(group_id, user_id, bot):
         return True
     else:
         return False
+
+
+class Message:
+    def __init__(self):
+        self.message = None
+    
+    def check(m):
+        if m == self.message:
+            return True
+        else:
+            self.message = m
+            return False
