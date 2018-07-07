@@ -13,7 +13,7 @@ class Message:
     def __init__(self):
         self.message = None
     
-    def check(m):
+    def check(self, m):
         if m == self.message:
             return True
         else:
