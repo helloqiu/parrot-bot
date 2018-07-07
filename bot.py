@@ -21,21 +21,21 @@ def handle_group_increase(context):
 def handle_group_message(context):
     global last_message
     # check if the user is admin
-    if_admin = check_admin(context['group_id'], context.['user_id'], bot)
+    if_admin = check_admin(context['group_id'], context['user_id'], bot)
     if not if_admin and not context['anonymous']:
         if context['message'] == last_message and random.choice([True, False]):
             # 禁言！
             last_message = context['message']
-            bot.set_group_ban(context['group_id'], context['user_id'], 60 * 5)
+            bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], 60 * 5)
             bot.send_group_msg(
-                context['group_id'],
+                group_id=context['group_id'],
                 message='[CQ:at,qq={}]这是一只鹦鹉[CQ:emoji,id=128536]'.format(context['user_id'])
             )
         else:
             # 变成复读机！
             if random.randint(0, 9) < bot_config['rate'] * 10:
                 bot.send_group_msg(
-                    context['group_id'],
+                    group_id=context['group_id'],
                     message=context['message']
                 )
 
