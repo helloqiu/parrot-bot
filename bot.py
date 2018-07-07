@@ -28,6 +28,7 @@ def handle_group_message(context):
     if_admin = check_admin(context['group_id'], context['user_id'], bot)
     if not if_admin and not context['anonymous']:
         logging.info(context['raw_message'])
+        logging.info(last_message)
         if context['raw_message'] == last_message and random.choice([True, False]):
             # 禁言！
             logging.info('禁言！')
