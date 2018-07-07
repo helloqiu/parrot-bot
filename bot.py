@@ -4,7 +4,9 @@ from cqhttp import CQHttp
 from utils import check_admin
 from gevent.pywsgi import WSGIServer
 import random
+import logging
 
+logging.setLevel(logging.INFO)
 bot = CQHttp(api_root='http://127.0.0.1:5700')
 bot_config = {
     'rate': 0.1
@@ -14,6 +16,7 @@ last_message = None
 
 @bot.on_event('group_increase')
 def handle_group_increase(context):
+    logging.info('有新人!')
     bot.send(context, message='欢迎新人！\n请先关注群公告哦~', is_raw=True)
 
 
@@ -25,6 +28,7 @@ def handle_group_message(context):
     if not if_admin and not context['anonymous']:
         if context['message'] == last_message and random.choice([True, False]):
             # 禁言！
+            logging.info('禁言！')
             last_message = context['message']
             bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], duration=60 * 5)
             bot.send_group_msg(
