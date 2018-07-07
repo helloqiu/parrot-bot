@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:slim
 
 ADD requirements.txt /
 ADD bot.py /
