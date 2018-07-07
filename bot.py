@@ -8,7 +8,7 @@ import logging
 
 bot = CQHttp(api_root='http://127.0.0.1:5700')
 bot_config = {
-    'rate': 0.1
+    'rate': 0.3
 }
 
 last_message = Message()
@@ -24,17 +24,25 @@ def handle_group_increase(context):
 def handle_group_message(context):
     # check if the user is admin
     if_admin = check_admin(context['group_id'], context['user_id'], bot)
-    if not if_admin and not context['anonymous']:
+    if not context['anonymous']:
         logging.debug(context['raw_message'])
         logging.debug(last_message.message)
         if last_message.check(context['raw_message']) and random.choice([True, False]):
-            # 禁言！
-            logging.debug('禁言！')
-            bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], duration=60 * 5)
-            bot.send_group_msg(
-                group_id=context['group_id'],
-                message='[CQ:at,qq={}]\n这是一只鹦鹉[CQ:emoji,id=128536]'.format(context['user_id'])
-            )
+            if not if_admin:
+                # 禁言！
+                logging.debug('禁言！')
+                bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], duration=60 * 5)
+                bot.send_group_msg(
+                    group_id=context['group_id'],
+                    message='[CQ:at,qq={}]\n这是一只鹦鹉[CQ:emoji,id=128536]'.format(context['user_id'])
+                )
+            else:
+                # 低头！
+                logging.debug('低头！')
+                bot.send_group_msg(
+                    group_id=context['group_id'],
+                    message='[CQ:at,qq={}]\n亲亲可爱鹦鹉\n[CQ:emoji,id=128536]'.format(context['user_id'])
+                )
         else:
             # 变成复读机！
             if random.randint(0, 9) < bot_config['rate'] * 10:
