@@ -6,7 +6,8 @@ from gevent.pywsgi import WSGIServer
 import random
 import logging
 
-logging.setLevel(logging.INFO)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 bot = CQHttp(api_root='http://127.0.0.1:5700')
 bot_config = {
     'rate': 0.1
