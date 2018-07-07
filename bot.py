@@ -26,7 +26,7 @@ def handle_group_message(context):
         if context['message'] == last_message and random.choice([True, False]):
             # 禁言！
             last_message = context['message']
-            bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], 60 * 5)
+            bot.set_group_ban(group_id=context['group_id'], user_id=context['user_id'], duration=60 * 5)
             bot.send_group_msg(
                 group_id=context['group_id'],
                 message='[CQ:at,qq={}]这是一只鹦鹉[CQ:emoji,id=128536]'.format(context['user_id'])
