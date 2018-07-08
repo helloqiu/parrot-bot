@@ -11,18 +11,6 @@ def check_admin(group_id, user_id, bot):
         return False
 
 
-class Message:
-    def __init__(self):
-        self.message = None
-    
-    def check(self, m):
-        if m == self.message:
-            return True
-        else:
-            self.message = m
-            return False
-
-
 __CREATE_TABLE_SQL__ = """
 CREATE TABLE IF NOT EXISTS Parrot
 (id TEXT PRIMARY KEY NOT NULL ,
