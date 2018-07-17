@@ -29,7 +29,6 @@ def handle_group_message(context):
     if not context['anonymous']:
         last_message = session.get(context['group_id'])
         logging.debug(context['raw_message'])
-        logging.debug(last_message.message)
         if last_message and last_message['message'] == context['raw_message'] and random.choice([True, False]):
             if not if_admin:
                 # 禁言！
