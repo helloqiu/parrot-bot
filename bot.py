@@ -8,7 +8,7 @@ import logging
 
 bot = CQHttp(api_root='http://127.0.0.1:5700')
 bot_config = {
-    'rate': 0.3,
+    'rate': 0.05,
     'ban_duration': 60 * 5
 }
 
