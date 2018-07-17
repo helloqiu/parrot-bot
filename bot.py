@@ -51,7 +51,7 @@ def handle_group_message(context):
                 )
         else:
             # 变成复读机！
-            if random.randint(0, 9) < session.config['rate'] * 10:
+            if random.randint(0, 99) < session.config['rate'] * 100:
                 bot.send_group_msg(
                     group_id=context['group_id'],
                     message=context['message']
