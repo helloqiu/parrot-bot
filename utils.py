@@ -2,6 +2,10 @@
 import sqlite3
 import json
 import random
+import re
+
+ONE_ARG_COMMAND_RE = re.compile(r'/(\S*)')
+TWO_ARG_COMMAND_RE = re.compile(r'/(\S*)\s(\S*)')
 
 
 def check_admin(group_id, user_id, bot):
@@ -19,6 +23,18 @@ def lucky_enough(luck=0):
     :return: Bool
     """
     return random.randint(0, 99) < luck
+
+
+def compile_command(command):
+    groups = TWO_ARG_COMMAND_RE.match(command)
+    if groups:
+        return groups.group(1), groups.group(2)
+    else:
+        groups = ONE_ARG_COMMAND_RE.match(command)
+        if groups:
+            return groups.group(1), None
+        else:
+            return None
 
 
 __CREATE_TABLE_SQL__ = """
