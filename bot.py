@@ -33,7 +33,7 @@ def handle_group_message(context):
     # check if this is a command
     command = compile_command(context['raw_message'])
     if command:
-        return handle_command(context, **command)
+        return handle_command(context, *command)
     else:
         return handle_plain_text(context)
 
