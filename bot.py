@@ -67,7 +67,7 @@ def handle_plain_text(context):
                 )
         else:
             # 变成复读机！
-            if lucky_enough(int(last_message['rate'] * 100)):
+            if last_message and lucky_enough(int(last_message['rate'] * 100)):
                 bot.send_group_msg(
                     group_id=context['group_id'],
                     message=context['message']
