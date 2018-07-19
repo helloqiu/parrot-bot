@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 import json
+import random
+import re
+
+ONE_ARG_COMMAND_RE = re.compile(r'/(\S*)')
+TWO_ARG_COMMAND_RE = re.compile(r'/(\S*)\s(\S*)')
 
 
 def check_admin(group_id, user_id, bot):
@@ -9,6 +14,27 @@ def check_admin(group_id, user_id, bot):
         return True
     else:
         return False
+
+
+def lucky_enough(luck=0):
+    """
+    Check if you lucky enough.
+    :param luck: should be an int between 0-100
+    :return: Bool
+    """
+    return random.randint(0, 99) < luck
+
+
+def compile_command(command):
+    groups = TWO_ARG_COMMAND_RE.match(command)
+    if groups:
+        return groups.group(1), groups.group(2)
+    else:
+        groups = ONE_ARG_COMMAND_RE.match(command)
+        if groups:
+            return groups.group(1), None
+        else:
+            return None
 
 
 __CREATE_TABLE_SQL__ = """
@@ -41,7 +67,7 @@ class SQLiteStorage:
         :return: 返回取到的数据，如果是空则返回一个空的 ``dict`` 对象
         """
         session_json = self.db.execute(
-            "SELECT value FROM Parrot WHERE id=? LIMIT 1;", (id, )
+            "SELECT value FROM Parrot WHERE id=? LIMIT 1;", (id,)
         ).fetchone()
         if session_json is None:
             return {}
@@ -64,5 +90,5 @@ class SQLiteStorage:
         根据 id 删除数据。
         :param id: 要删除的数据的 id
         """
-        self.db.execute("DELETE FROM Parrot WHERE id=?;", (id, ))
+        self.db.execute("DELETE FROM Parrot WHERE id=?;", (id,))
         self.db.commit()
