@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from cqhttp import CQHttp
-from utils import check_admin, SQLiteStorage
+from utils import check_admin, SQLiteStorage, lucky_enough
 from gevent.pywsgi import WSGIServer
 import random
 import logging
@@ -9,7 +9,8 @@ import logging
 bot = CQHttp(api_root='http://127.0.0.1:5700')
 bot_config = {
     'rate': 0.05,
-    'ban_duration': 60 * 5
+    'ban_duration': 60 * 5,
+    'ban_rate': 0.5
 }
 
 session = SQLiteStorage()
@@ -51,7 +52,7 @@ def handle_group_message(context):
                 )
         else:
             # 变成复读机！
-            if random.randint(0, 99) < session.config['rate'] * 100:
+            if lucky_enough(int(session.config['rate'] * 100)):
                 bot.send_group_msg(
                     group_id=context['group_id'],
                     message=context['message']
