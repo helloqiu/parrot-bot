@@ -1,5 +1,5 @@
 certifi==2018.11.29
-chardet==3.0.4
+chardet==4.0.0
 click==7.0
 cqhttp==1.2.3
 Flask==1.0.2
